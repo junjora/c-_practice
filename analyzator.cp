@@ -1,3 +1,4 @@
+//обратная польская запись
 #include <iostream>
 #include <iostream>
 #include <stack>
@@ -14,6 +15,7 @@ bool is_symbol(char sym)
         case '+': return true;
         case '-': return true;
         case '(': return true;
+	case ')': return true;
         case '^': return true;
         // ---------- //
         case '/': return true;
