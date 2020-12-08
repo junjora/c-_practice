@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <math.h>
 
+//проверка на то, что элемент символ
 bool is_symbol(char sym)
 {
     switch(sym)
@@ -20,7 +21,8 @@ bool is_symbol(char sym)
     }
     return false;
 }
- 
+
+//назначение средненго приоритета
 bool is_mid_priority(char sym)
 {
     switch(sym)
@@ -30,7 +32,8 @@ bool is_mid_priority(char sym)
     }
     return false;
 }
- 
+
+//назначение низкого приоритета
 bool is_low_priority(char sym)
 {
     switch(sym)
@@ -40,26 +43,24 @@ bool is_low_priority(char sym)
     }
     return false;
 }
- 
+
+//назначение высокого приоритета
 bool is_high_priority(char sym)
 {
     return sym == '^' ? true : false;
 }
 
 int main() {
-    //std::string expression("(3 + 4 - 5) * 2"); // ??????
-    //std::string expression("1 + (5 - 3) * (3 - 1) + 2");
-    std::string expression("2 ^ 3 * 2 + 1");
-    //std::string expression("2 + 3 + 5 * 2 + 3 * 6 / 2");
-    //std::string expression("2 + 3 + 5 * (2 + 3 * 6) / 2"); // ???
-    std::stack<char> symbols;
-    std::vector<char> exit_string;
-    std::stack<double> result;
+	
+    std::string expression("2 ^ 3 * 2 + 1");  //инициализация выражения-строки
+    std::stack<char> symbols;  		      //объявление стека, которое будет хранить символы
+    std::vector<char> exit_string;   	      //объявление вектора, которое будет хранить выходную строку
+    std::stack<double> result;		      //объявление стека
     double buffer = 0;
- 
+ 	//проход по символам в выражении
     for(std::string::iterator it = expression.begin(); it != expression.end(); ++it)
     {
-        if(::isdigit(*it)) exit_string.push_back(*it); // Если это цифра
+        if(::isdigit(*it)) exit_string.push_back(*it); // Если это цифра, то помещаем элемент в конец вектора
         else if(is_symbol(*it)) // Если это символ
         {
             if(is_low_priority(*it))
@@ -74,7 +75,7 @@ int main() {
             else if(is_mid_priority(*it))
             {
                 
-			if(symbols.size() && (is_mid_priority(symbols.top()) || is_high_priority(symbols.top())))
+		if(symbols.size() && (is_mid_priority(symbols.top()) || is_high_priority(symbols.top())))
                 {
                     exit_string.push_back(symbols.top());
                     symbols.pop();
